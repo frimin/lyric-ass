@@ -1,0 +1,32 @@
+{
+  "name": "lyric-ass",
+  "version": "0.1.0",
+  "description": "ASS format lyrics generator",
+  "main": "index.js",
+  "dependencies": {
+    "lyric-dl": "^0.1.5"
+  },
+  "directories": {
+      "bin": "./bin",
+      "lib": "./lib",
+      "example": "./example"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo 'do nothing'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://frimin@github.com/frimin/lyric-ass.git"
+  },
+  "keywords": [
+    "lyric",
+    "ass"
+  ],
+  "author": "frimin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/frimin/lyric-ass/issues"
+  },
+  "homepage": "https://github.com/frimin/lyric-ass#readme"
+}
