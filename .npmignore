@@ -5,3 +5,4 @@
 out
 example
 node_modules
+*.ass

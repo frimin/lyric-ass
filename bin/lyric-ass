@@ -15,17 +15,25 @@ ASS format lyrics generator.\n\
 Usage: lyric-ass [OPTIONS] [url]\n\
 \n\
 OPTIONS: \n\
-    -e --edit-args=<commands>\n\
-    -E --edit-mode\n\
-    -h --help\n\
-    --frame-size=<size>\n\
-    --max-duration\n\
+    -e --edit-cmd=<commands>    enable edit commands, see 'edit commands' section\n\
+    -E --edit-mode              enable edit mode, visible the number in each lyric\n\
+    -h --help                   show this message\n\
+    --frame-size=<size>         resize frame size, default for 1920,1080\n\
+    --max-duration=<second>     set default lyric duration time\n\
 \n\
 EDIT COMMANDS:\n\
-    \"1d,4+1.33,5-1.3\"\n\
-    <range|index> <command> [arg1 [,arg2 [, ...]]]\n\
-    <range|index> s             delete lyrics\n\
-    <range|index> s             delete lyrics\n\
+    Usage: <range|list> <command> [arg1 [,arg2 [, ...]]]\n\
+            range: <start>:<end>\n\
+            list: <n1>,<n2>[,...]\n\
+    \n\
+    'd'                         delete lyrics\n\
+    '>'<sec>                    move the lyrics to back <sec> second(s)\n\
+    '<'<sec>                    move the lyrics to front <sec> second(s)\n\
+    '+'<sec>                    add lyrics duration time <sec> second(s)\n\
+    '-'<sec>                    reduce lyrics duration time <sec> second(s)\n\
+    \n\
+    Example:\n\
+    '1:-1>1;-1d' : move all to back 1 second and delete the last one\n\
 ")
     process.exit(0)
 }
@@ -236,7 +244,7 @@ function handleSong(songInfo, args) {
             throw `failed match time: "${e}"`
 
         lyrics.push({
-            'raw_index': k,
+            'rawIndex': k,
             'origalTime': v[0],
             'time': parseInt(m[1]) * 60 + parseFloat(m[2]) + 0.7  , 
             'text': (isEditMode ? `#${k + 1}/${length} ` : '') + v[1],
@@ -257,20 +265,36 @@ function handleSong(songInfo, args) {
 
     lyrics = applyCommand(lyrics, args['e'] || args['edit-args'])
 
+    var screenSize
+
+    if (args['frame-size']) {
+        var m = args['frame-size'].match(/(\d+),(\d+)/)
+        if (!m || m.length != 3) {
+            console.error(`argument --frame-size: invalid format ${screenSizeStr}`)
+            process.exit(2)
+        } else {
+            screenSize = [ parseInt(m[1]), parseInt(m[2]) ]
+        }
+    } else {
+        screenSize = [1920, 1080]
+    }
+
     var assGenerator = new ass.ASSGenerator({
-        'title': '??',
+        title: songInfo.name,
+        width: screenSize[0],
+        height: screenSize[1],
     })
 
     assGenerator.createStyle({
-        'name': 'style_1',
-        'fontName': 'Apple SD Gothic Neo',
-        'fontSize': 40,
+        name: 'style_1',
+        fontName: 'Apple SD Gothic Neo',
+        fontSize: 40,
     })
 
     assGenerator.createStyle({
-        'name': 'style_2',
-        'fontName': 'Apple SD Gothic Neo',
-        'fontSize': 50,
+        name: 'style_2',
+        fontName: 'Apple SD Gothic Neo',
+        fontSize: 50,
     })
 
     var textPos = assGenerator.toRelativePos([150, 928], [1920, 1080])
