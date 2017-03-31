@@ -265,6 +265,16 @@ function handleSong(songInfo, args) {
 
     lyrics = applyCommand(lyrics, args['e'] || args['edit-args'])
 
+    for (var i = 0; i != lyrics.length; i++) {
+        var thisLine = lyrics[i]
+        var lastLine = lyrics[i + 1]
+
+        if (lastLine) {
+            thisLine.durationTime = Math.min(lastLine.time - thisLine.time, thisLine.durationTime)
+            thisLine.durationTime = Math.max(thisLine.durationTime, 0)
+        }
+    }
+
     var screenSize
 
     if (args['frame-size']) {
