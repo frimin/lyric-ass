@@ -4,6 +4,14 @@
 
 支持 [Lyric-dl](https://github.com/frimin/lyric-dl) 所支持的在线地址
 
+安装
+
+	npm install lyric-ass -g
+
+更新
+
+	npm update lyric-ass -g
+
 ### 使用
 
 命令格式

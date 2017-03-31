@@ -4,6 +4,7 @@
   "description": "ASS format lyrics generator",
   "main": "index.js",
   "dependencies": {
+    "minimist": "^1.2.0",
     "lyric-dl": "^0.1.5"
   },
   "directories": {
