@@ -8,7 +8,7 @@ var state = {};
 state.globalOptions = function (options) { }
 
 require('../lib/command/url').init(state, program);
-require('../lib/command/recreate').init(state, program);
+require('../lib/command/restyle').init(state, program);
 
 program.parse(process.argv);
 
