@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-"use strict"
+'use strict'
 
 var common = require('../lib/common');
 var program = require('commander');
@@ -9,11 +9,12 @@ var app = {};
 app.editcodeHelp = function(program) {
     program.on('--help', function(){
         console.log("  Editcode:\n\
-    usage: <range|list><command>[arg1[,arg2[,...]]]\n\
+    Usage: <range|list><command>[arg1[,arg2[,...]]]\n\
     \n\
     range: <startindex>:<endindex>\n\
     list: <index>,<index>[,...]\n\
     \n\
+    'r',<regexp>,[newstring]    replace lyrics content to newstring (optional)\n\
     'd'                         delete lyrics\n\
     '>'<sec>                    move the lyrics to back <sec> second(s)\n\
     '<'<sec>                    move the lyrics to front <sec> second(s)\n\
@@ -21,7 +22,11 @@ app.editcodeHelp = function(program) {
     '-'<sec>                    reduce lyrics duration time <sec> second(s)\n\
     \n\
     Example:\n\
+    \n\
     '1:-1>1;-1d' : move all the lyrics backwards 1 second and delete the last one\n\
+    '1:-1r\((.*)\),$1' : replace all lyrics and insert submatch #1 to remove parentheses\n\
+    \n\
+    In any editcode arguments, not allowed use ';' and ','  \n\
 ");
 });
 }
