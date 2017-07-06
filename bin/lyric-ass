@@ -14,7 +14,7 @@ app.editcodeHelp = function(program) {
     range: <startindex>:<endindex>\n\
     list: <index>,<index>[,...]\n\
     \n\
-    'r',<regexp>,[newstring]    replace lyrics content to newstring (optional)\n\
+    'r'<regexp>,[newstring]    replace lyrics content to newstring (optional)\n\
     'd'                         delete lyrics\n\
     '>'<sec>                    move the lyrics to back <sec> second(s)\n\
     '<'<sec>                    move the lyrics to front <sec> second(s)\n\
@@ -26,7 +26,7 @@ app.editcodeHelp = function(program) {
     '1:-1>1;-1d' : move all the lyrics backwards 1 second and delete the last one\n\
     '1:-1r\((.*)\),$1' : replace all lyrics and insert submatch #1 to remove parentheses\n\
     \n\
-    In any editcode arguments, not allowed use ';' and ','  \n\
+    Not allowed use ';' and ',' in editcode arguments.\n\
 ");
 });
 }
@@ -35,6 +35,7 @@ app.globalOptions = function (options) { }
 
 require('../lib/command/url').init(app, program);
 require('../lib/command/restyle').init(app, program);
+require('../lib/command/style-config').init(app, program);
 
 program.parse(process.argv);
 
