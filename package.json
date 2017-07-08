@@ -15,7 +15,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo 'do nothing'"
+    "test": "node test/test.js"
   },
   "repository": {
     "type": "git",
