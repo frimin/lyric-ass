@@ -2,7 +2,7 @@
 
 一个由在线歌词生成至 ASS 字幕文件的命令行工具，依赖 Node.js 框架。
 
-支持 [Lyric-dl](https://github.com/frimin/lyric-dl) 所支持的在线地址
+支持 [lyric-dl](https://github.com/frimin/lyric-dl) 所支持的在线地址
 
 安装
 
@@ -16,15 +16,15 @@
 
 命令格式
 
-	lyric-ass [选项] <URL>
+	lyric-ass [子命令] [选项] <URL>
 
-不作任何内容修改由原始歌词生成 ASS 字幕:
+不作任何内容修改由原始歌词直接生成 ASS 字幕:
 
-	lyric-ass <url>
+	lyric-ass url <url>
 	
 你可以使用一系列指令来对歌词时间轴进行简单的编辑:
 
-	lyric-ass -e "1:-1>1" <url>
+	lyric-ass url -e "1:-1>1" <url>
 	
 指令格式为: <区间 | 列表> <操作类型> <参数>
 
@@ -34,6 +34,7 @@
 
 操作类型有如下几种：
 
+  * **r** \<regexp\>,[newstring] : 替换内容
   * **d** : 删除
   * **>** \<second\> : 时间轴后移
   * **<** \<second\> : 时间轴前移
@@ -46,3 +47,17 @@
   * "1,2,2+1;3d" 把索引 1 和 2 的歌词持续时间增加一秒，且 2 被增加两次并且删除第三句歌词
 
 为了直观地看到歌词索引，可以添加选项 **-E**, 它会在歌词内容中添加当前歌词的初始索引信息
+
+### 修改已生成 ASS 字幕文件
+
+	lyric-ass restyle -e "1:-1>1" <filename>
+	
+### 修改默认样式
+
+创建一个字幕风格配置文件:
+
+	lyric-ass style-config [stylename]
+	
+可以修改字体等细节选项，在生成字幕的时候传入配置文件:
+
+	lyric-ass restyle -e "1:-1>1" <filename> [styleConfigFile]

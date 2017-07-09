@@ -1,6 +1,6 @@
 {
   "name": "lyric-ass",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "ASS format lyrics generator",
   "main": "index.js",
   "dependencies": {
